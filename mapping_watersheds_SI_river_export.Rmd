@@ -1,0 +1,104 @@
+---
+title: "trying_sf_package_watershed"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load Packages
+
+```{r}
+
+library(tidyverse)
+library(sf)
+library(tmap)
+library(leaflet)
+library(readr)
+library(raster)
+library(rgdal)
+library(sp)
+library(broom)
+library(ggmap)
+
+```
+
+Import Data
+
+```{r}
+
+AllWatersheds_LatLong <- read_csv("AllWatersheds_LatLong.csv")
+
+AllWatersheds_LatLong <- AllWatersheds_LatLong %>%
+  mutate(Unique_Site_ID = paste0(LTER, "_", Stream.Site)) 
+
+AllWatersheds_LatLong$Unique_Site_ID <- as.factor(AllWatersheds_LatLong$Unique_Site_ID)
+
+AllWatersheds_LatLong %>% group_by(Unique_Site_ID)
+
+
+```
+
+Remembering leaflet
+
+```{r}
+
+library(leaflet)
+
+m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=174.768, lat=-36.852,
+    popup="The birthplace of R")
+m  # Print the map
+
+```
+
+```{r}
+
+leaflet() %>% addCircles(data = AllWatersheds_LatLong)
+leaflet() %>% addCircles(data = AllWatersheds_LatLong, lat = ~ Latitude, lng = ~ Longitude) %>% 
+addTiles()
+
+```
+Switching it to a shape file
+
+```{r}
+
+AllWatersheds_LatLong_for_shp <- read.csv("AllWatersheds_LatLong.csv", stringsAsFactors = FALSE)
+
+
+r <- SpatialPointsDataFrame(AllWatersheds_LatLong_for_shp[,3:4],
+                    AllWatersheds_LatLong_for_shp)
+
+# second, assign the CRS in one of two ways
+r <- crs("+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+                 +ellps=WGS84 +towgs84=0,0,0" )
+
+plot.locations <- SpatialPointsDataFrame(AllWatersheds_LatLong_for_shp[,3:4],
+                    AllWatersheds_LatLong_for_shp ,    #the R object to convert
+                    proj4string = r) 
+
+plot(plot.locations, 
+     main="Map of Plot Locations")
+
+```
+
+```{r}
+
+bbox <- make_bbox(lon = Longitude, lat = Latitude, AllWatersheds_LatLong, f = 0.05)
+
+watershed_base_map <- get_map(location = bbox , maptype = "toner", source = "stamen")
+
+
+ggmap(watershed_base_map) + geom_point(data = AllWatersheds_LatLong, mapping = aes(x = Longitude, y = Latitude)) + geom_point(data=AllWatersheds_LatLong, aes(x= Longitude, y= Latitude), color="navyblue", size = 3) + 
+  theme(plot.subtitle = element_text(vjust = 1), 
+    plot.caption = element_text(vjust = 1), 
+    legend.text = element_text(face = "italic"), 
+    legend.key = element_rect(fill = NA))  +
+  labs(x = "Longitude", y = "Latitude")
+
+
+
+```
+
