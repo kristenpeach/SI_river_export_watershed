@@ -1,5 +1,5 @@
 ---
-title: "delineateWatershed"
+title: "delineateWatershed_all_points"
 output: html_document
 ---
 
@@ -7,9 +7,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ```{r}
 
 library(tidyverse)
+library(progressr)
 library(terrainr)
 library(readr)
 library(devtools)
@@ -33,222 +35,100 @@ AllWatersheds_LatLong$Unique_Site_ID <- as.factor(AllWatersheds_LatLong$Unique_S
 AllWatersheds_LatLong %>% group_by(Unique_Site_ID)
 
 
-
-
 ```
 
-Trying terrainr to retrieve elevation so that we can identify the lowest elevation point of each site
-
-
-terrainr is built to play nicely with functions from the sf and raster packages. In order to get our simulated points into the right format, we need to use the st_as_sf function from the sf package:
+## Sucessful points
 
 ```{r}
 
 
-##Hubbard Brook
-HBR_only <- AllWatersheds_LatLong %>% filter(LTER == 'HBR')
+AND_GSMACK <- delineateWatershed(xlocation = -122.17282, ylocation = 44.22054, crs = 4326,
+includeparameters = "true")
 
-HBR_only_points <- sf::st_as_sf(HBR_only,
-                                 coords = c("Longitude", "Latitude"))
+AND_GSMACK_params <- AND_GSMACK$parameters
 
-HBR_only_points <- sf::st_set_crs(HBR_only_points, 4326)
+AND_GSMACK_params <- AND_GSMACK_params %>% mutate(Unique_site_id = "AND_GSMACK")
+#Cool map!
+map_AND_GSMACK <- leafletWatershed(AND_GSMACK)
 
+#Looking at all the available features
+features_AND_GSMACK <- pullFeatureCollection(AND_GSMACK)
+
+#Convert watershed to sp
+# Returns either SpatialPointsDataFrame or SpatialPolygonsDataFrame
+
+sp_AND_GSMACK <- toSp(AND_GSMACK)
+
+shp_AND_GSMACK <- writeShapefile(AND_GSMACK, layer = "AND_GSMACK")
 
 
 
 ```
-
-
-Now that we’ve got our data in the right format, it’s time to retrieve our data. terrainr currently supports downloading DEMs from the USGS 3D Elevation Program as well as orthoimages from the National Agricultural Imagery Program, in addition to other base map images from the National Map. These programs each have slightly different APIs and different restrictions on file types and the size of image you can download at once. Rather than make you think about this, terrainr handles all the edges of making API requests for you, including splitting your request into tiles and formatting the query.
-
-For this vignette, we’ll retrieve both elevation and orthoimagery using the get_tiles function. We can either use the generic “elevation” and “ortho” shorthands to get our data, or we can specify “3DEPElevation” and “USGSNAIPPlus” to make sure we’re using the same specific service – the short codes aren’t guaranteed to download data from the same service between releases!
 
 ```{r}
 
 
-handlers("progress")
-with_progress( 
-  output_files <- get_tiles(HBR_only_points,
-                            output_prefix = tempfile(),
-                            services = "elevation" ))
+AND_GSWS06 <- delineateWatershed(xlocation = -122.18071, ylocation = 44.26151, crs = 4326,
+includeparameters = "true")
+
+AND_GSWS06_params <- AND_GSWS06$parameters
+
+AND_GSWS06_params <- AND_GSWS06_params %>% mutate(Unique_site_id = "AND_GSWS06")
+#Cool map!
+map_AND_GSWS06 <- leafletWatershed(AND_GSWS06)
+
+#Looking at all the available features
+features_AND_GSWS06 <- pullFeatureCollection(AND_GSWS06)
+
+#Convert watershed to sp
+# Returns either SpatialPointsDataFrame or SpatialPolygonsDataFrame
+
+sp_AND_GSWS06 <- toSp(AND_GSWS06)
+
+shp_AND_GSWS06 <- writeShapefile(AND_GSWS06, layer = "AND_GSWS06")
 
 
 
 ```
 
-If we were requesting more data than we can download at once, each element of the list would be a character vector containing the file paths for all of our downloaded tiles. Since we’re sticking with a relatively small area for this example, we only have one tile for each service.
 
-As a quick aside, note that you can control where these files save to via the output_prefix argument (which appends the suffix servicename_xindex_yindex.tif to each tile it downloads) – you don’t need to save them to a temporary directory (and redownload every time you launch R) as we’re doing here!
-
-If all you want is to access these endpoints to download data, this is probably the only terrainr function you’ll need – the files produced by this function can be processed just like any other spatial data:
 
 ```{r}
 
-raster::plot(raster::raster(output_files[[1]]))
+AND_GSWS02 <- delineateWatershed(xlocation = -122.17282, ylocation = 44.22054, crs = 4326,
+includeparameters = "true")
 
-#raster::plotRGB(raster::brick(output_files[[2]]), scale = 1)
+AND_GSWS02_params <- AND_GSWS02$parameters
+
+AND_GSWS02_params <- AND_GSWS02_params %>% mutate(Unique_site_id = "AND_GSWS02")
+
 
 ```
 
-In addition to the regular methods for plotting rasters in R, terrainr makes it a bit easier to use ggplot2 for plotting the data returned by get_tiles. Plotting single-band rasters, like our elevation file, is already well-supported in base ggplot2:
+
 
 ```{r}
 
-elevation_raster <- raster::raster(output_files[[1]])
-elevation_df <- as.data.frame(elevation_raster, xy = TRUE)
-elevation_df <- setNames(elevation_df, c("x", "y", "elevation"))
 
-#ggplot() + 
-#  geom_raster(data = elevation_df, aes(x = x, y = y, fill = elevation)) + 
-#  scale_fill_distiller(palette = "BrBG") + 
-#  coord_sf(crs = 4326)
+AND_GSWS07 <- delineateWatershed(xlocation = -122.17526, ylocation = 44.26464, crs = 4326,
+includeparameters = "true")
 
+AND_GSWS07_params <- AND_GSWS07$parameters
 
-
-HBR_watershed_lowest_elevation <- elevation_df %>%
-  arrange(desc(elevation)) %>%
-  tail(1) %>%
-  mutate(SiteName = "HBR")
+AND_GSWS07_params <- AND_GSWS07_params %>% mutate(Unique_site_id = "AND_GSWS07")
 
 
 ```
-
-
-##AND
 
 ```{r}
 
-##AND
-AND_only <- AllWatersheds_LatLong %>% filter(LTER == 'AND')
 
-AND_only_points <- sf::st_as_sf(AND_only,
-                                 coords = c("Longitude", "Latitude"))
+AND_GSWS08 <- delineateWatershed(xlocation = -122.17079, ylocation = 44.26629, crs = 4326,
+includeparameters = "true")
 
-AND_only_points <- sf::st_set_crs(AND_only_points, 4326)
+AND_GSWS08_params <- AND_GSWS08$parameters
 
-
-handlers("progress")
-with_progress( 
-  and_output_files <- get_tiles(AND_only_points,
-                            output_prefix = tempfile(),
-                            services = "elevation" ))
-
-raster::plot(raster::raster(and_output_files[[1]]))
-
-elevation_raster <- raster::raster(and_output_files[[1]])
-elevation_df <- as.data.frame(elevation_raster, xy = TRUE)
-elevation_df <- setNames(elevation_df, c("x", "y", "elevation"))
-
-
-AND_watershed_lowest_elevation <- elevation_df %>%
-  arrange(desc(elevation)) %>%
-  tail(1) %>%
-  mutate(SiteName = "AND")
-
-```
-
-
-##KRR
-
-```{r}
-
-KRR_only <- AllWatersheds_LatLong %>% filter(LTER == 'KRR')
-
-KRR_only_points <- sf::st_as_sf(KRR_only,
-                                 coords = c("Longitude", "Latitude"))
-
-KRR_only_points <- sf::st_set_crs(KRR_only_points, 4326)
-
-
-handlers("progress")
-with_progress( 
-  krr_output_files <- get_tiles(KRR_only_points,
-                            output_prefix = tempfile(),
-                            services = "elevation"))
-
-raster::plot(raster::raster(krr_output_files[[1]]))
-
-elevation_raster <- raster::raster(krr_output_files[[1]])
-elevation_df <- as.data.frame(elevation_raster, xy = TRUE)
-elevation_df <- setNames(elevation_df, c("x", "y", "elevation"))
-
-
-KRR_watershed_lowest_elevation <- elevation_df %>%
-  arrange(desc(elevation)) %>%
-  tail(1) %>%
-  mutate(SiteName = "KRR")
-
+AND_GSWS08_params <- AND_GSWS08_params %>% mutate(Unique_site_id = "AND_GSWS08")
 
 
 ```
-
-
-
-## LUQ
-
-## Also does not like LUQ which is a bummer because that site did not have a lot of info on the LTER website on watershed delineation.
-```{r}
-
-
-LUQ_only <- AllWatersheds_LatLong %>% filter(LTER == 'LUQ')
-
-LUQ_only_points <- sf::st_as_sf(LUQ_only,
-                                 coords = c("Longitude", "Latitude"))
-
-LUQ_only_points <- sf::st_set_crs(LUQ_only_points, 4326)
-
-
-handlers("progress")
-with_progress( 
-  output_files <- get_tiles(LUQ_only_points,
-                            output_prefix = tempfile(),
-                            services = "elevation" ))
-
-raster::plot(raster::raster(output_files[[1]]))
-
-elevation_raster <- raster::raster(output_files[[1]])
-elevation_df <- as.data.frame(elevation_raster, xy = TRUE)
-elevation_df <- setNames(elevation_df, c("x", "y", "elevation"))
-
-
-LUQ_watershed_lowest_elevation <- elevation_df %>%
-  arrange(desc(elevation)) %>%
-  tail(1) %>%
-  mutate(SiteName = "LUQ")
-
-```
-
-## ARC
-
-It really does not like this site and is not working here. Happily there are only three sites and it is relatively easy to just find the elevation manually 
-```{r}
-
-#-149.317878, 68.61700844
-ARC_only <- AllWatersheds_LatLong %>% filter(LTER == 'ARC')
-
-ARC_only_points <- sf::st_as_sf(ARC_only,
-                                 coords = c("Longitude", "Latitude"))
-
-ARC_only_points <- sf::st_set_crs(ARC_only_points, 4326)
-
-
-handlers("progress")
-with_progress( 
-  output_files <- get_tiles(ARC_only_points,
-                            output_prefix = tempfile(),
-                            services = "elevation" ))
-
-raster::plot(raster::raster(output_files[[1]]))
-
-elevation_raster <- raster::raster(output_files[[1]])
-elevation_df <- as.data.frame(elevation_raster, xy = TRUE)
-elevation_df <- setNames(elevation_df, c("x", "y", "elevation"))
-
-
-ARC_watershed_lowest_elevation <- elevation_df %>%
-  arrange(desc(elevation)) %>%
-  tail(1) %>%
-  mutate(SiteName = "ARC")
-
-```
-
