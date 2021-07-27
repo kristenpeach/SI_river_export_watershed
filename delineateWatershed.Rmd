@@ -132,3 +132,60 @@ AND_GSWS08_params <- AND_GSWS08_params %>% mutate(Unique_site_id = "AND_GSWS08")
 
 
 ```
+
+```{r}
+
+
+AND_GSWS09 <- delineateWatershed(xlocation = -122.25880, ylocation = 44.20119, crs = 4326,
+includeparameters = "true")
+
+AND_GSWS09_params <- AND_GSWS09$parameters
+
+AND_GSWS09_params <- AND_GSWS09_params %>% mutate(Unique_site_id = "AND_GSWS09")
+
+
+```
+
+
+## UMR
+
+```{r}
+
+#UMR_BK01.0M is the real unique id but I replaced the "." with a "_"
+
+UMR_BK01_0M <- delineateWatershed(xlocation = -91.25103, ylocation = 43.84128, crs = 4326,
+includeparameters = "true", rcode = "WI")
+
+UMR_BK01_0M_params <- UMR_BK01_0M$parameters
+
+UMR_BK01_0M_params <- UMR_BK01_0M_params %>% mutate(Unique_site_id = "UMR_BK01.0M")
+
+
+```
+
+
+```{r}
+
+
+UMR_CH00.1M <- delineateWatershed(xlocation = -92.08417, ylocation = 44.4102, crs = 4326,
+includeparameters = "true", rcode = "WI")
+
+UMR_CH00.1M_params <- UMR_CH00.1M$parameters
+
+UMR_CH00.1M_params <- UMR_CH00.1M_params %>% mutate(Unique_site_id = "UMR_CH00.1M")
+
+
+```
+
+## Trying Luquillo just to confirm it won't work outside US
+
+```{r}
+
+
+LUQ_QS <- delineateWatershed(xlocation = 	18.32000, ylocation = -65.82000, crs = 4326,
+includeparameters = "true")
+
+
+
+
+```
