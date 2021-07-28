@@ -133,6 +133,8 @@ AND_GSWS08_params <- AND_GSWS08_params %>% mutate(Unique_site_id = "AND_GSWS08")
 
 ```
 
+
+
 ```{r}
 
 
@@ -163,7 +165,7 @@ UMR_BK01_0M_params <- UMR_BK01_0M_params %>% mutate(Unique_site_id = "UMR_BK01.0
 
 ```
 
-
+## Too big! Have to use web app to delineate watershed. Too big regardless of if I use Wisconsin or Minnesota
 ```{r}
 
 
@@ -177,15 +179,232 @@ UMR_CH00.1M_params <- UMR_CH00.1M_params %>% mutate(Unique_site_id = "UMR_CH00.1
 
 ```
 
-## Trying Luquillo just to confirm it won't work outside US
+This watershed is also huge but it works. When I use the web app it works for Minnesota but not Wisconsin.
 
 ```{r}
 
 
-LUQ_QS <- delineateWatershed(xlocation = 	18.32000, ylocation = -65.82000, crs = 4326,
-includeparameters = "true")
+	
+UMR_CN00.1M <- delineateWatershed(xlocation = -92.59353, ylocation = 44.60340, crs = 4326,
+includeparameters = "true", rcode = "MN")
+
+	
+UMR_CN00.1M_params <- UMR_CN00.1M$parameters
+
+	
+UMR_CN00.1M_params <- UMR_CN00.1M_params %>% mutate(Unique_site_id = "UMR_CN00.1M")
+
+
+```
+
+Missouri works but Illinois does not
+
+```{r}
+
+
+	
+UMR_CU11.6M <- delineateWatershed(xlocation = -90.74888, ylocation = 38.92419, crs = 4326,
+includeparameters = "true", rcode = "MO")
+
+	
+UMR_CU11.6M_params <- UMR_CU11.6M$parameters
+
+	
+UMR_CU11.6M_params <- UMR_CU11.6M_params %>% mutate(Unique_site_id = "UMR_CU11.6M")
+
+
+```
+
+When you specify Illinois on the web app it shows you the nice blue lines to pick from but it does not actually let you select any points within the Illinois River
+
+```{r}
+
+
+UMR_I080.2M <- delineateWatershed(xlocation = -90.53346, ylocation = 39.93919, crs = 4326,
+includeparameters = "true", rcode = "IL")
+
+	
+UMR_I080.2M_params <- UMR_I080.2M$parameters
+
+	
+UMR_I080.2M_params <- UMR_I080.2M_params %>% mutate(Unique_site_id = "UMR_I080.2M")
+
+
+```
+
+When you specify Illinois it works on the web app but times out here in R (Error in curl::curl_fetch_memory(url, handle = handle) : Timeout was reached: [streamstats.usgs.gov] Operation timed out after 60002 milliseconds with 0 bytes received)
+
+```{r}
+
+
+UMR_LM00.5M <- delineateWatershed(xlocation = -90.52039, ylocation = 39.98828, crs = 4326,
+includeparameters = "true", rcode = "IL")
+
+	
+UMR_LM00.5M_params <- UMR_LM00.5M$parameters
+
+	
+UMR_LM00.5M_params <- UMR_LM00.5M_params %>% mutate(Unique_site_id = "UMR_LM00.5M")
+
+
+```
+
+
+For this one Missouri works on the web app but the watershed is a super small area. Worth double checking on the web app to make sure this looks correct to the working group
+
+```{r}
+
+
+UMR_M078.0B <- delineateWatershed(xlocation = -89.51206, ylocation = 37.60460, crs = 4326,
+includeparameters = "true", rcode = "MO")
+
+	
+UMR_M078.0B_params <- UMR_M078.0B$parameters
+
+UMR_M078.0B_params <- UMR_M078.0B_params %>% mutate(Unique_site_id = "UMR_M078.0B")
+
+
+```
+
+
+
+
+
+This one is interesting. The function funs with either MO ir IL but the point does appear to be on the IL side of the boundary. The watershed boundaries look wildly different on the web app depending on if you select the IL or MO side of the river.
+
+```{r}
+
+
+UMR_M241.4K <- delineateWatershed(xlocation = -90.68312, ylocation = 39.00474, crs = 4326,
+includeparameters = "true", rcode = "IL")
+
+	
+UMR_M241.4K_params <- UMR_M241.4K$parameters
+
+UMR_M241.4K_params <- UMR_M241.4K_params %>% mutate(Unique_site_id = "UMR_M241.4K")
+
+
+```
+Iowa works for this one but not Illinois
+
+```{r}
+
+
+UMR_M556.4A <- delineateWatershed(xlocation = -90.42071, ylocation = 42.25474, crs = 4326,
+includeparameters = "true", rcode = "IA")
+
+	
+UMR_M556.4A_params <- UMR_M556.4A$parameters
+
+UMR_M556.4A_params <- UMR_M556.4A_params %>% mutate(Unique_site_id = "UMR_M556.4A")
+
+
+```
+
+Minnesota works 
+
+```{r}
+
+
+UMR_M701.1B<- delineateWatershed(xlocation = -91.29378, ylocation = 43.84932, crs = 4326,
+includeparameters = "true", rcode = "MN")
+
+	
+UMR_M701.1B_params <- UMR_M701.1B$parameters
+
+UMR_M701.1B_params <- UMR_M701.1B_params %>% mutate(Unique_site_id = "UMR_M701.1B")
+
+
+```
+
+Works with Wisconsin
+
+```{r}
+
+
+	
+UMR_M764.3A <- delineateWatershed(xlocation = -92.10064, ylocation = 44.41197, crs = 4326,
+includeparameters = "true", rcode = "WI")
+
+	
+UMR_M764.3A_params <- UMR_M764.3A$parameters
+
+UMR_M764.3A_params <- UMR_M764.3A_params %>% mutate(Unique_site_id = "UMR_M764.3A")
+
+
+```
+
+
+Works with Minnesota on the web app but too big for the R function
+
+```{r}
+
+	
+UMR_M786.2C <- delineateWatershed(xlocation = -92.44935, ylocation = 44.56224, crs = 4326,
+includeparameters = "true", rcode = "MN")
+
+	
+UMR_M786.2C_params <- UMR_M786.2C$parameters
+
+UMR_M786.2C_params <- UMR_M786.2C_params %>% mutate(Unique_site_id = "UMR_M786.2C")
+
+
+```
+
+Iowa works on the web app but it is too big for the R function
+
+```{r}
+
+	
+UMR_MQ02.1M <- delineateWatershed(xlocation = -90.33544, ylocation = 42.16381, crs = 4326,
+includeparameters = "true", rcode = "IA")
+
+	
+UMR_MQ02.1M_params <- UMR_MQ02.1M$parameters
+
+UMR_MQ02.1M_params <- UMR_MQ02.1M_params %>% mutate(Unique_site_id = "UMR_MQ02.1M")
+
+
+```
+
+If you view this point on the web app youll see it appears to be directly between two different bodies of water. Working group may want to double check we select the correct one within Illinois 
+
+```{r}
+
+	
+UMR_SG16.2C <- delineateWatershed(xlocation = -90.14657, ylocation = 40.06443, crs = 4326,
+includeparameters = "true", rcode = "IL")
+
+	
+UMR_SG16.2C_params <- UMR_SG16.2C$parameters
+
+UMR_SG16.2C_params <- UMR_SG16.2C_params %>% mutate(Unique_site_id = "UMR_SG16.2C")
+
+
+```
+
+
+Iowa works on the web app but is too big to be run in the function
+
+
+```{r}
+
+	
+UMR_WP02.6M <- delineateWatershed(xlocation = -90.35971, ylocation = 41.72764, crs = 4326,
+includeparameters = "true", rcode = "IA")
+
+	
+UMR_WP02.6M_params <- UMR_WP02.6M$parameters
+
+UMR_WP02.6M_params <- UMR_WP02.6M_params %>% mutate(Unique_site_id = "UMR_WP02.6M")
+
+
+```
+
+```{r}
 
 
 
 
 ```
+
