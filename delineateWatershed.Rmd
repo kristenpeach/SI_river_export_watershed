@@ -626,3 +626,139 @@ HBR_ws9_params <- 	HBR_ws9_params %>% mutate(Unique_site_id = "HBR_ws9")
 
 
 ```
+
+
+## KRR
+
+This one really should work but it does not work on the web app. It looks like it is in Florida but you can't even select Florida as an option. The function does not work if I leave the rcode parameter out and it does not work if I include it. 
+
+```{r}
+
+
+	
+KRR_S65 <- delineateWatershed(xlocation = -81.19755, ylocation = 27.80358, crs = 4326, includeparameters = "true", rcode = "FL")
+
+	
+KRR_S65_params <- KRR_S65$parameters
+
+KRR_S65_params <- 	KRR_S65_params %>% mutate(Unique_site_id = "KRR_S65")
+
+
+```
+
+
+
+
+```{r}
+
+
+	
+KRR_S65A <- delineateWatershed(xlocation = -81.13427, ylocation = 27.65964, crs = 4326, includeparameters = "true", rcode = "FL")
+
+	
+KRR_S65A_params <- KRR_S65A$parameters
+
+KRR_S65A_params <- 	KRR_S65A_params %>% mutate(Unique_site_id = "KRR_S65A")
+
+
+```
+
+
+
+```{r}
+
+
+
+	
+KRR_S65D <- delineateWatershed(xlocation = -81.02285, ylocation = 27.31437, crs = 4326, includeparameters = "true", rcode = "FL")
+
+	
+KRR_S65D_params <- KRR_S65D$parameters
+
+KRR_S65D_params <- 	KRR_S65D_params %>% mutate(Unique_site_id = "KRR_S65D")
+
+
+```
+
+
+## LMP
+
+```{r}
+
+
+	
+LMP_LMP73 <- delineateWatershed(xlocation = -70.95216, ylocation = 43.10297, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+LMP_LMP73_params <- LMP_LMP73$parameters
+
+LMP_LMP73_params <- 	LMP_LMP73_params %>% mutate(Unique_site_id = "LMP_LMP73")
+
+
+```
+
+
+## MCM
+
+
+Ohhh right of course it does not work for McMurdo (MCM). Antarctica!
+
+```{r}
+
+
+	
+MCM_Andersen_Creek_at_H1 <- delineateWatershed(xlocation = 	-77.62277, ylocation = 162.90636, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+MCM_Andersen_Creek_at_H1_params <- MCM_Andersen_Creek_at_H1$parameters
+
+MCM_Andersen_Creek_at_H1_params <-  MCM_Andersen_Creek_at_H1_params %>% mutate(Unique_site_id = "MCM_Andersen Creek at H1")
+
+
+```
+
+
+## NWT
+
+```{r}
+
+
+	
+NWT_ALBION <- delineateWatershed(xlocation = 	-105.59230, ylocation = 40.04287, crs = 4326, includeparameters = "true", rcode = "CO")
+
+	
+NWT_ALBION_params <- NWT_ALBION$parameters
+
+NWT_ALBION_params <-  NWT_ALBION_params %>% mutate(Unique_site_id = "NWT_ALBION")
+
+
+```
+
+```{r}
+
+
+	
+NWT_MARTINELLI <- delineateWatershed(xlocation = -105.59580, ylocation = 40.05060, crs = 4326, includeparameters = "true", rcode = "CO")
+
+	
+NWT_MARTINELLI_params <- NWT_MARTINELLI$parameters
+
+NWT_MARTINELLI_params <-  NWT_MARTINELLI_params %>% mutate(Unique_site_id = "NWT_MARTINELLI")
+
+
+```
+
+
+```{r}
+
+
+	
+NWT_SADDLE_STREAM <- delineateWatershed(xlocation = -105.59232, ylocation = 40.04903, crs = 4326, includeparameters = "true", rcode = "CO")
+
+	
+NWT_SADDLE_STREAM_params <- NWT_SADDLE_STREAM$parameters
+
+NWT_SADDLE_STREAM_params <- NWT_SADDLE_STREAM_params %>% mutate(Unique_site_id = "NWT_SADDLE_STREAM")
+
+
+```
