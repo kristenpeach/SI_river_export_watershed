@@ -401,10 +401,228 @@ UMR_WP02.6M_params <- UMR_WP02.6M_params %>% mutate(Unique_site_id = "UMR_WP02.6
 
 ```
 
+
+## AND
+
+Oregon works really nicely for this one
 ```{r}
 
+	
+AND_GSMACK <- delineateWatershed(xlocation = -122.17282, ylocation = 44.22054, crs = 4326,
+includeparameters = "true", rcode = "OR")
 
+	
+AND_GSMACK_params <- AND_GSMACK$parameters
+
+AND_GSMACK_params <- AND_GSMACK_params %>% mutate(Unique_site_id = "AND_GSMACK")
 
 
 ```
 
+Oregon also works well here
+```{r}
+
+	
+AND_GSWS02 <- delineateWatershed(xlocation = -122.24488, ylocation = 44.21202, crs = 4326,
+includeparameters = "true", rcode = "OR")
+
+	
+AND_GSWS02_params <- AND_GSWS02$parameters
+
+AND_GSWS02_params <- AND_GSWS02_params %>% mutate(Unique_site_id = "AND_GSWS02")
+
+
+```
+
+```{r}
+
+	
+AND_GSWS06 <- delineateWatershed(xlocation = -122.18071, ylocation = 44.26151, crs = 4326,
+includeparameters = "true", rcode = "OR")
+
+	
+AND_GSWS06_params <- AND_GSWS06$parameters
+
+AND_GSWS06_params <- AND_GSWS06_params %>% mutate(Unique_site_id = "AND_GSWS06")
+
+
+```
+
+
+
+```{r}
+
+	
+AND_GSWS010 <- delineateWatershed(xlocation = -122.26106, ylocation = 44.21706, crs = 4326,
+includeparameters = "true", rcode = "OR")
+
+	
+AND_GSWS010_params <- AND_GSWS010$parameters
+
+AND_GSWS010_params <- AND_GSWS010_params %>% mutate(Unique_site_id = "AND_GSWS010")
+
+
+```
+
+
+
+## ARC
+
+On the web app this actually looks like it wants to work. You can select 'Alaska' as a valid state (which obviously it is but we werent sure how USGS dealt with it)
+
+```{r}
+
+	
+ARC_Imnavait_Weir <- delineateWatershed(xlocation = -149.31788, ylocation = 68.61701, crs = 4326, includeparameters = "true", rcode = "AK")
+
+	
+ARC_Imnavait_Weir_params <- ARC_Imnavait_Weir$parameters
+
+ARC_Imnavait_Weir_params <- ARC_Imnavait_Weir_params %>% mutate(Unique_site_id = "ARC_Imnavait Weir")
+
+
+```
+
+
+I gave this one a try too just because it is right next to Toolik Lake so I thought delineation might be easier but it did not work on the web app.
+
+```{r}
+
+	
+ARC_TW_Weir <- delineateWatershed(xlocation = -149.61656, ylocation = 68.62349, crs = 4326, includeparameters = "true", rcode = "AK")
+
+	
+ARC_TW_Weir_params <- ARC_TW_Weir$parameters
+
+ARC_TW_Weir_params <- ARC_TW_Weir_params %>% mutate(Unique_site_id = "ARC_TW Weir")
+
+
+```
+
+## HBR
+
+I was hoping Hubbard Brook was all within one state but it does not look like it!
+
+```{r}
+
+	
+	
+HBR_ws1 <- delineateWatershed(xlocation = -71.72650, ylocation = 43.95203, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+HBR_ws1_params <- HBR_ws1$parameters
+
+HBR_ws1_params <- 	HBR_ws1_params %>% mutate(Unique_site_id = "HBR_ws1")
+
+
+```
+
+
+
+```{r}
+
+	
+	
+HBR_ws2 <- delineateWatershed(xlocation = -71.72420, ylocation = 43.95336, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+HBR_ws2_params <- HBR_ws2$parameters
+
+HBR_ws2_params <- 	HBR_ws2_params %>% mutate(Unique_site_id = "HBR_ws2")
+
+
+```
+
+
+```{r}
+
+
+HBR_ws3 <- delineateWatershed(xlocation = -71.72280, ylocation = 43.95487, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+HBR_ws3_params <- HBR_ws3$parameters
+
+HBR_ws3_params <- 	HBR_ws3_params %>% mutate(Unique_site_id = "HBR_ws3")
+
+
+```
+
+
+
+```{r}
+
+	
+HBR_ws4 <- delineateWatershed(xlocation = -71.72580, ylocation = 43.95018, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+HBR_ws4_params <- HBR_ws4$parameters
+
+HBR_ws4_params <- 	HBR_ws4_params %>% mutate(Unique_site_id = "HBR_ws4")
+
+
+```
+
+```{r}
+
+
+HBR_ws5 <- delineateWatershed(xlocation = -71.73190, ylocation = 43.94885, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+HBR_ws5_params <- HBR_ws5$parameters
+
+HBR_ws5_params <- 	HBR_ws5_params %>% mutate(Unique_site_id = "HBR_ws5")
+
+
+```
+
+```{r}
+
+
+HBR_ws6 <- delineateWatershed(xlocation = -71.73560, ylocation = 43.94994, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+HBR_ws6_params <- HBR_ws6$parameters
+
+HBR_ws6_params <- 	HBR_ws6_params %>% mutate(Unique_site_id = "HBR_ws6")
+
+
+```
+
+```{r}
+
+
+HBR_ws7 <- delineateWatershed(xlocation = -71.76710, ylocation = 43.92751, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+HBR_ws7_params <- HBR_ws7$parameters
+
+HBR_ws7_params <- 	HBR_ws7_params %>% mutate(Unique_site_id = "HBR_ws7")
+
+
+```
+
+```{r}
+
+
+HBR_ws8 <- delineateWatershed(xlocation = -71.75950, ylocation = 43.92944, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+HBR_ws8_params <- HBR_ws8$parameters
+
+HBR_ws8_params <- 	HBR_ws8_params %>% mutate(Unique_site_id = "HBR_ws8")
+
+
+```
+
+```{r}
+
+
+HBR_ws9 <- delineateWatershed(xlocation = -71.74720, ylocation = 43.92601, crs = 4326, includeparameters = "true", rcode = "NH")
+
+	
+HBR_ws9_params <- HBR_ws9$parameters
+
+HBR_ws9_params <- 	HBR_ws9_params %>% mutate(Unique_site_id = "HBR_ws9")
+
+
+```
