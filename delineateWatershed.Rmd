@@ -148,8 +148,67 @@ AND_GSWS09_params <- AND_GSWS09_params %>% mutate(Unique_site_id = "AND_GSWS09")
 
 ```
 
+```{r}
+
+	
+AND_GSWS010 <- delineateWatershed(xlocation = -122.26106, ylocation = 44.21706, crs = 4326,
+includeparameters = "true", rcode = "OR")
+
+	
+AND_GSWS010_params <- AND_GSWS010$parameters
+
+AND_GSWS010_params <- AND_GSWS010_params %>% mutate(Unique_site_id = "AND_GSWS010")
+
+
+```
+
+```{r}
+
+	
+AND_GSWS06 <- delineateWatershed(xlocation = -122.18071, ylocation = 44.26151, crs = 4326,
+includeparameters = "true", rcode = "OR")
+
+	
+AND_GSWS06_params <- AND_GSWS06$parameters
+
+AND_GSWS06_params <- AND_GSWS06_params %>% mutate(Unique_site_id = "AND_GSWS06")
+
+
+```
+
+
+
+Making combined table of AND parameters
+
+Sites to combine:
+AND_GSWS010
+AND_GSWS09
+AND_GSWS08
+AND_GSWS07
+AND_GSWS06
+AND_GSWS02
+AND_GSMACK
+
+```{r}
+
+tbl1 <- merge(AND_GSMACK_params, AND_GSWS010_params, all = TRUE)
+tbl2 <- merge(tbl1, AND_GSWS02_params, all = TRUE)
+tbl3 <- merge(tbl2, AND_GSWS06_params, all = TRUE)
+tbl4 <- merge(tbl3, AND_GSWS07_params, all = TRUE)
+tbl5 <- merge(tbl4, AND_GSWS08_params, all = TRUE)
+tbl6 <- merge(tbl5, AND_GSWS09_params, all = TRUE)
+AND_all_parameters <- merge(tbl6, AND_GSMACK_params, all = TRUE)
+
+write.csv(AND_all_parameters,"AND_all_parameters.csv", row.names = FALSE)
+
+
+```
+
+
 
 ## UMR
+
+Spread across many different states so state selection really matters for this site
 
 ```{r}
 
@@ -270,7 +329,7 @@ UMR_M078.0B_params <- UMR_M078.0B_params %>% mutate(Unique_site_id = "UMR_M078.0
 
 
 
-This one is interesting. The function funs with either MO ir IL but the point does appear to be on the IL side of the boundary. The watershed boundaries look wildly different on the web app depending on if you select the IL or MO side of the river.
+This one is interesting. The function runs with either MO ir IL but the point does appear to be on the IL side of the boundary. The watershed boundaries look wildly different on the web app depending on if you select the IL or MO side of the river.
 
 ```{r}
 
@@ -401,69 +460,48 @@ UMR_WP02.6M_params <- UMR_WP02.6M_params %>% mutate(Unique_site_id = "UMR_WP02.6
 
 ```
 
+Making combined table of parameters for the UMR sites
 
-## AND
-
-Oregon works really nicely for this one
-```{r}
-
-	
-AND_GSMACK <- delineateWatershed(xlocation = -122.17282, ylocation = 44.22054, crs = 4326,
-includeparameters = "true", rcode = "OR")
-
-	
-AND_GSMACK_params <- AND_GSMACK$parameters
-
-AND_GSMACK_params <- AND_GSMACK_params %>% mutate(Unique_site_id = "AND_GSMACK")
-
-
-```
-
-Oregon also works well here
-```{r}
-
-	
-AND_GSWS02 <- delineateWatershed(xlocation = -122.24488, ylocation = 44.21202, crs = 4326,
-includeparameters = "true", rcode = "OR")
-
-	
-AND_GSWS02_params <- AND_GSWS02$parameters
-
-AND_GSWS02_params <- AND_GSWS02_params %>% mutate(Unique_site_id = "AND_GSWS02")
-
-
-```
+Site to merge:
+UMR_WP02.6M
+UMR_SG16.2C
+UMR_MQ02.1M
+UMR_M786.2C
+UMR_M764.3A
+UMR_M701.1B
+UMR_M556.4A
+UMR_M241.4K
+UMR_M078.0B
+UMR_LM00.5M
+UMR_I080.2M
+UMR_CU11.6M
+UMR_CN00.1M
+UMR_CH00.1M
+UMR_BK01_0M
 
 ```{r}
 
-	
-AND_GSWS06 <- delineateWatershed(xlocation = -122.18071, ylocation = 44.26151, crs = 4326,
-includeparameters = "true", rcode = "OR")
+tbl1 <- merge(UMR_WP02.6M_params, UMR_SG16.2C_params, all = TRUE)
+tbl2 <- merge(tbl1, UMR_MQ02.1M_params, all = TRUE)
+tbl3 <- merge(tbl2, UMR_M786.2C_params, all = TRUE)
+tbl4 <- merge(tbl3, UMR_M764.3A_params, all = TRUE)
+tbl5 <- merge(tbl4, UMR_M701.1B_params, all = TRUE)
+tbl6 <- merge(tbl5, UMR_M556.4A_params, all = TRUE)
+tbl7 <- merge(tbl6, UMR_M556.4A_params , all = TRUE)
+tbl8 <- merge(tbl7, UMR_M241.4K_params, all = TRUE)
+tbl9 <- merge(tbl8, UMR_M078.0B_params , all = TRUE)
+tbl10 <- merge(tbl9, UMR_LM00.5M_params, all = TRUE)
+tbl11 <- merge(tbl10, UMR_I080.2M_params, all = TRUE)
+tbl12 <- merge(tbl11, UMR_CU11.6M_params , all = TRUE)
+tbl13 <- merge(tbl12, UMR_CN00.1M_params , all = TRUE)
+tbl14 <- merge(tbl13, UMR_CH00.1M_params , all = TRUE)
 
-	
-AND_GSWS06_params <- AND_GSWS06$parameters
+UMR_all_parameters <- merge(tbl14, UMR_BK01_0M_params, all = TRUE)
 
-AND_GSWS06_params <- AND_GSWS06_params %>% mutate(Unique_site_id = "AND_GSWS06")
-
-
-```
-
-
-
-```{r}
-
-	
-AND_GSWS010 <- delineateWatershed(xlocation = -122.26106, ylocation = 44.21706, crs = 4326,
-includeparameters = "true", rcode = "OR")
-
-	
-AND_GSWS010_params <- AND_GSWS010$parameters
-
-AND_GSWS010_params <- AND_GSWS010_params %>% mutate(Unique_site_id = "AND_GSWS010")
+write.csv(UMR_all_parameters,"UMR_all_parameters.csv", row.names = FALSE)
 
 
 ```
-
 
 
 ## ARC
@@ -501,7 +539,7 @@ ARC_TW_Weir_params <- ARC_TW_Weir_params %>% mutate(Unique_site_id = "ARC_TW Wei
 
 ## HBR
 
-I was hoping Hubbard Brook was all within one state but it does not look like it!
+All 10 sites work when rcode is set to NH. When entering the points on the web app you are asked to select between 3 different states but they are all within NH. 
 
 ```{r}
 
@@ -575,6 +613,9 @@ HBR_ws5_params <- 	HBR_ws5_params %>% mutate(Unique_site_id = "HBR_ws5")
 
 ```
 
+
+
+
 ```{r}
 
 
@@ -623,6 +664,40 @@ HBR_ws9 <- delineateWatershed(xlocation = -71.74720, ylocation = 43.92601, crs =
 HBR_ws9_params <- HBR_ws9$parameters
 
 HBR_ws9_params <- 	HBR_ws9_params %>% mutate(Unique_site_id = "HBR_ws9")
+
+
+```
+
+
+Making a merged table of all HBR sites parameters
+
+Sites to merge:
+HBR_ws9
+HBR_ws8
+HBR_ws7
+HBR_ws6
+HBR_ws5
+HBR_ws4
+HBR_ws3
+HBR_ws2
+HBR_ws1
+
+
+
+```{r}
+
+tbl1 <- merge(HBR_ws9_params, HBR_ws8_params, all = TRUE)
+tbl2 <- merge(tbl1, HBR_ws7_params, all = TRUE)
+tbl3 <- merge(tbl2, HBR_ws6_params, all = TRUE)
+tbl4 <- merge(tbl3, HBR_ws5_params, all = TRUE)
+tbl5 <- merge(tbl4, HBR_ws4_params, all = TRUE)
+tbl6 <- merge(tbl5, HBR_ws3_params, all = TRUE)
+tbl7 <- merge(tbl6, HBR_ws2_params , all = TRUE)
+
+
+HBR_all_parameters <- merge(tbl7, HBR_ws1_params, all = TRUE)
+
+write.csv(HBR_all_parameters,"HBR_all_parameters.csv", row.names = FALSE)
 
 
 ```
@@ -694,6 +769,8 @@ LMP_LMP73_params <- LMP_LMP73$parameters
 
 LMP_LMP73_params <- 	LMP_LMP73_params %>% mutate(Unique_site_id = "LMP_LMP73")
 
+#Only one site for LMP
+write.csv(LMP_LMP73_params,"LMP_all_parameters.csv", row.names = FALSE)
 
 ```
 
@@ -759,6 +836,27 @@ NWT_SADDLE_STREAM <- delineateWatershed(xlocation = -105.59232, ylocation = 40.0
 NWT_SADDLE_STREAM_params <- NWT_SADDLE_STREAM$parameters
 
 NWT_SADDLE_STREAM_params <- NWT_SADDLE_STREAM_params %>% mutate(Unique_site_id = "NWT_SADDLE_STREAM")
+
+
+```
+
+
+Making a merged table of all NWT parameter info
+
+Sites to merge:
+NWT_SADDLE_STREAM_params
+NWT_MARTINELLI_params
+NWT_ALBION_params 
+
+
+```{r}
+
+tbl1 <- merge(NWT_MARTINELLI_params, NWT_SADDLE_STREAM_params, all = TRUE)
+
+
+NWT_all_parameters <- merge(tbl1, NWT_ALBION_params, all = TRUE)
+
+write.csv(NWT_all_parameters,"NWT_all_parameters.csv", row.names = FALSE)
 
 
 ```
