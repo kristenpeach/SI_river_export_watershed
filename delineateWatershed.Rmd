@@ -709,14 +709,19 @@ This one really should work but it does not work on the web app. It looks like i
 
 ```{r}
 
+##KRR_S65D
 
-	
-KRR_S65 <- delineateWatershed(xlocation = -81.19755, ylocation = 27.80358, crs = 4326, includeparameters = "true", rcode = "FL")
+param_name <- c("Mean Annual Precip at Gage", "Mean Annual Temperature", "Elevation at gage")
 
-	
-KRR_S65_params <- KRR_S65$parameters
+param_description <- c("Mean annual precip at the stream outlet (based on annual PRISM precip data in inches from 1981-210)", "Mean Annual Temperature (based on annual PRISM data in Farenheit from 1981-2010)", "Elevation (ft) at the gage")
 
-KRR_S65_params <- 	KRR_S65_params %>% mutate(Unique_site_id = "KRR_S65")
+param_code <- c("PRECIPOUT_PRISM", "TEMP_PRISM", "ELEVATION_GAGE_PRISM")
+
+param_value <- c("45.33", "73.2", "26")
+
+param_unit <- c("inches", "degrees F", "ft")
+
+KRR_S65_params <- 	data.frame(ID = "0", name = param_name, description = param_description, code = param_code, unit = param_unit, value = param_value, Unique_site_id = "KRR_S65D")
 
 
 ```
@@ -844,9 +849,9 @@ NWT_SADDLE_STREAM_params <- NWT_SADDLE_STREAM_params %>% mutate(Unique_site_id =
 Making a merged table of all NWT parameter info
 
 Sites to merge:
-NWT_SADDLE_STREAM_params
-NWT_MARTINELLI_params
-NWT_ALBION_params 
+NWT_SADDLE_STREAM
+NWT_MARTINELLI
+NWT_ALBION
 
 
 ```{r}
