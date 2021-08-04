@@ -721,24 +721,7 @@ param_value <- c("45.33", "73.2", "26")
 
 param_unit <- c("inches", "degrees F", "ft")
 
-KRR_S65_params <- 	data.frame(ID = "0", name = param_name, description = param_description, code = param_code, unit = param_unit, value = param_value, Unique_site_id = "KRR_S65D")
-
-
-```
-
-
-
-
-```{r}
-
-
-	
-KRR_S65A <- delineateWatershed(xlocation = -81.13427, ylocation = 27.65964, crs = 4326, includeparameters = "true", rcode = "FL")
-
-	
-KRR_S65A_params <- KRR_S65A$parameters
-
-KRR_S65A_params <- 	KRR_S65A_params %>% mutate(Unique_site_id = "KRR_S65A")
+KRR_S65D_params <- 	data.frame(ID = "0", name = param_name, description = param_description, code = param_code, unit = param_unit, value = param_value, Unique_site_id = "KRR_S65D")
 
 
 ```
@@ -747,15 +730,40 @@ KRR_S65A_params <- 	KRR_S65A_params %>% mutate(Unique_site_id = "KRR_S65A")
 
 ```{r}
 
+##KRR_S65D
+
+param_name <- c("Mean Annual Precip at Gage", "Mean Annual Temperature", "Elevation at gage")
+
+param_description <- c("Mean annual precip at the stream outlet (based on annual PRISM precip data in inches from 1981-210)", "Mean Annual Temperature (based on annual PRISM data in Farenheit from 1981-2010)", "Elevation (ft) at the gage")
+
+param_code <- c("PRECIPOUT_PRISM", "TEMP_PRISM", "ELEVATION_GAGE_PRISM")
+
+param_value <- c("43.6", "73.3", "20")
+
+param_unit <- c("inches", "degrees F", "ft")
+
+KRR_S65E_params <- 	data.frame(ID = "0", name = param_name, description = param_description, code = param_code, unit = param_unit, value = param_value, Unique_site_id = "KRR_S65E")
 
 
-	
-KRR_S65D <- delineateWatershed(xlocation = -81.02285, ylocation = 27.31437, crs = 4326, includeparameters = "true", rcode = "FL")
+```
 
-	
-KRR_S65D_params <- KRR_S65D$parameters
 
-KRR_S65D_params <- 	KRR_S65D_params %>% mutate(Unique_site_id = "KRR_S65D")
+
+```{r}
+
+##KRR_S65D
+
+param_name <- c("Mean Annual Precip at Gage", "Mean Annual Temperature", "Elevation at gage")
+
+param_description <- c("Mean annual precip at the stream outlet (based on annual PRISM precip data in inches from 1981-210)", "Mean Annual Temperature (based on annual PRISM data in Farenheit from 1981-2010)", "Elevation (ft) at the gage")
+
+param_code <- c("PRECIPOUT_PRISM", "TEMP_PRISM", "ELEVATION_GAGE_PRISM")
+
+param_value <- c("51.6", "72.7", "46")
+
+param_unit <- c("inches", "degrees F", "ft")
+
+KRR_S65A_params <- 	data.frame(ID = "0", name = param_name, description = param_description, code = param_code, unit = param_unit, value = param_value, Unique_site_id = "KRR_S65A")
 
 
 ```
