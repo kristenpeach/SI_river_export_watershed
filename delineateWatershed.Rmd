@@ -17,6 +17,9 @@ library(readr)
 library(devtools)
 devtools::install_github("markwh/streamstats")
 library(streamstats)
+install.packages("prism")
+library(prism)
+library(ggplot2)
 
 
 ```
@@ -726,6 +729,32 @@ KRR_S65D_params <- 	data.frame(ID = "0", name = param_name, description = param_
 
 ```
 
+Using the Prism package
+
+```{r}
+
+
+#> Be sure to set the download folder using `prism_set_dl_dir()`.
+prism_set_dl_dir("~/prismtmp")
+
+
+# data already exist in the prism dl dir
+KRR_S65E <- c(-80.96258, 27.22588)
+
+# prism_archive_subset() will return prism data that matches the specified 
+# variable, time step, years, months, days, etc.
+
+to_slice <- prism_archive_subset("tmean", "monthly", mon = 1)
+p <- pd_plot_slice(to_slice, KRR_S65E)
+# add a linear average and title
+p + 
+  stat_smooth(method="lm", se = FALSE) + 
+  theme_bw() + 
+  ggtitle("Average January temperature in Boulder, CO 1982-2014")
+#> `geom_smooth()` using formula 'y ~ x'
+
+
+```
 
 
 ```{r}

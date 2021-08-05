@@ -1,0 +1,82 @@
+---
+title: "trying_MODIS"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+
+install.packages("MODISTools")
+library(MODISTools)
+
+```
+
+Based on this product list, I think the products we'd like to retrieve are MCD12Q1 (MODIS/Terra+Aqua Land Cover Type (LC) Yearly L3 Global 500 m SIN Grid) but maybe also GEDI03	(GEDI Gridded Land Surface Metrics (LSM) L3 1km EASE-Grid) and MCD12Q2	(MODIS/Terra+Aqua Land Cover Dynamics (LCD) Yearly L3 Global 500 m SIN Grid)
+```{r}
+
+
+products <- mt_products()
+head(products)
+
+```
+Once you have settled on the product you want to use in your analysis you will have to select a band, or multiple bands you want to download for a given location. To list all available bands for a given product use the mt_bands() function. You can use the mt_bands() function to list all available bands for a given product. Below I list all bands for the MCD12Q1 (MODIS/Terra+Aqua Land Cover Type (LC) Yearly L3 Global 500 m SIN Grid).
+
+```{r}
+
+bands <- mt_bands(product = "MCD12Q1")
+head(bands)
+
+```
+
+Similarly you can list all available dates (temporal coverage) for a given product and location defined using a latitude and longitude with the mt_dates() function.
+
+```{r}
+
+dates <- mt_dates(product = "MCD12Q1", lat = 27.22588, lon = -80.96258)
+head(dates)
+
+```
+
+Downloading MODIS time series
+
+Once you decide on which data to download using the above functions you can use these parameters to download a time series using the mt_subset() function. 
+
+The output format is a tidy data frame, as shown above. When witten to a csv with the parameter internal = FALSE this will result in a flat file on disk.
+
+Note that when a a region is defined using km_lr and km_ab multiple pixels might be returned. These are indexed using the pixel column in the data frame containing the time series data. The remote sensing values are listed in the value column. When no band is specified all bands of a given product are returned, be mindful of the fact that different bands might require different multipliers to represent their true values.
+
+When a large selection of locations is needed you might benefit from using the batch download function mt_batch_subset(), which provides a wrapper around the mt_subset() function in order to speed up large download batches. This function has a similar syntax to mt_subset() but requires a data frame defining site names (site_name) and locations (lat / lon) (or a comma delimited file with the same structure) to specify a list of download locations.
+
+```{r}
+
+KRR_S65E_lc_prop1 <- mt_subset(product = "MCD12Q1",
+                    lat = 27.22588,
+                    lon =  -80.96258,
+                    band = "LC_Prop1",
+                    start = "2001-01-01",
+                    end = "2006-01-01",
+                    km_lr = 20,
+                    km_ab = 20,
+                    site_name = "KRR_S65E",
+                    internal = TRUE,
+                    progress = FALSE)
+
+
+```
+
+
+```{r}
+
+
+# merge land cover and lai data
+KRR_S65E <- KRR_S65E_lc_prop1 %>%
+  rename("lc" = "value") %>%
+  select("lc","pixel") %>%
+  right_join(arcachon_lai, by = "pixel")
+
+```
+
