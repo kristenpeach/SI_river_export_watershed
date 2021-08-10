@@ -509,7 +509,7 @@ write.csv(UMR_all_parameters,"UMR_all_parameters.csv", row.names = FALSE)
 
 ## ARC
 
-On the web app this actually looks like it wants to work. You can select 'Alaska' as a valid state (which obviously it is but we werent sure how USGS dealt with it)
+On the web app this actually looks like it wants to work. You can select 'Alaska' as a valid state (which obviously it is but we werent sure how USGS dealt with it) but then it doesnt
 
 ```{r}
 
@@ -710,6 +710,29 @@ write.csv(HBR_all_parameters,"HBR_all_parameters.csv", row.names = FALSE)
 
 This one really should work but it does not work on the web app. It looks like it is in Florida but you can't even select Florida as an option. The function does not work if I leave the rcode parameter out and it does not work if I include it. 
 
+Using online resources to define land use in the Kissimmee Waterhsed (https://www.lake.wateratlas.usf.edu/watershed/geography.asp?wshedid=1&wbodyatlas=watershed#use)
+
+Acreage and Percentage within each Land Use / Land Cover Category for Kissimmee River Watershed
+
+
+```{r}
+
+param_name <- c("Urban_built_up_acres", "Urban_built_up_percentage", "Ag_acres", "Ag_percentage", "Rangeland_acres", "Rangeland_percentage", "Water_acres", "Water_percentage", "Wetlands_acres", "Wetlands_percentage", "Barren_land_acres", "Barren_land_percentage")
+
+param_code <- c("KPEACH_Manual")
+
+param_value <- c("2,086", "15", "4,304", "32", "443", "3", "900", "7", "3,757", "28", "31", "<1")
+
+param_unit <- c("acres", "percentage", "acres", "percentage", "acres", "percentage", "acres", "percentage", "acres", "percentage", "acres", "percentage")
+
+param_description <- c("Acreage_of_Urban_and_Built_Up_Area_in_watershed_2014", "Percentage_of_watershed_Urban_and_Built_Up_2014", "Acreage_of_Agricultural_Area_in_watershed_2014", "Percentage_of_watershed_Agricultural_2014", "Acreage_of_Rangeland_Area_in_watershed_2014", "Percentage_of_watershed_Rangeland_2014", "Acreage_of_Water_Area_in_watershed", "Percentage_of_watershed_Water", "Acreage_of_wetlands_in_watershed", "Percentage_of_watershed_Wetlands", "Acreage_of_barren_land_in_watershed", "Percentage_of_watershed_Barren_land")
+
+
+Kissimmee_params <- 	data.frame(ID = "0", name = param_name, description = param_description, code = param_code, unit = param_unit, value = param_value, Unique_site_id = "KRR")
+
+
+```
+
 ```{r}
 
 ##KRR_S65D
@@ -725,6 +748,10 @@ param_value <- c("45.33", "73.2", "26")
 param_unit <- c("inches", "degrees F", "ft")
 
 KRR_S65D_params <- 	data.frame(ID = "0", name = param_name, description = param_description, code = param_code, unit = param_unit, value = param_value, Unique_site_id = "KRR_S65D")
+
+
+KRR_S65D_params <- merge(KRR_S65D_params, Kissimmee_params, all = TRUE)
+
 
 
 ```
@@ -774,6 +801,8 @@ param_unit <- c("inches", "degrees F", "ft")
 KRR_S65E_params <- 	data.frame(ID = "0", name = param_name, description = param_description, code = param_code, unit = param_unit, value = param_value, Unique_site_id = "KRR_S65E")
 
 
+KRR_S65E_params <- merge(KRR_S65E_params, Kissimmee_params, all = TRUE)
+
 ```
 
 
@@ -794,8 +823,13 @@ param_unit <- c("inches", "degrees F", "ft")
 
 KRR_S65A_params <- 	data.frame(ID = "0", name = param_name, description = param_description, code = param_code, unit = param_unit, value = param_value, Unique_site_id = "KRR_S65A")
 
+KRR_S65A_params <- merge(KRR_S65E_params, Kissimmee_params, all = TRUE)
+
 
 ```
+
+
+
 
 
 ## LMP
